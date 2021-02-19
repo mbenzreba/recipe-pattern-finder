@@ -34,6 +34,7 @@ $TokenizationOutput = ".\corpora\peruvian-chicken-tokenized.txt"
 Clear-Content $TokenizationOutput
 Get-Content $SentDetectOutput | opennlp TokenizerME $TokenizationModel > $TokenizationOutput
 
+
 # Step 3. Find POSs (Phrases Of Speech) of the input
 $POSTaggerModel = ".\models\en-pos-maxent.bin"
 $POSTaggerOutput = ".\corpora\peruvian-chicken-postagged.txt"
