@@ -18,7 +18,7 @@ format](https://opennlp.apache.org/docs/1.9.3/manual/opennlp.html#tools.tokenize
 inspection I made of `peruvian-chicken.txt` I processed through `opennlp-basic-pipeline.ps1`, I found that some
 instructions followed a similar pattern: at the start of the sentence, and before the first comma (i.e. the first token
 of the sentence), there was always a _IN (preposition) POS, then 1 or 2 words, then a _NN POS (noun, singular or mass).
-Take for example: For (NN) the marinade (NN). I cannot analyze and detect each and every pattern myself, so I will
+Take for example: For (IN) the marinade (NN). I cannot analyze and detect each and every pattern myself, so I will
 write a tool to analyze and return common patterns found in the POS tagged corpora.
 
 ## Concerns
