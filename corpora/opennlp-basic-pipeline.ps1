@@ -34,14 +34,14 @@ $TokenizationOutput = ".\corpora\recipes-tokenized.txt"
 Clear-Content $TokenizationOutput
 Get-Content $SentDetectOutput | opennlp TokenizerME $TokenizationModel > $TokenizationOutput
 
-<#
+
 # Step 3a. Find POSs (Phrases Of Speech) of the input
 $POSTaggerModel = ".\models\en-pos-maxent.bin"
-$POSTaggerOutput = ".\corpora\peruvian-chicken-postagged.txt"
+$POSTaggerOutput = ".\corpora\recipes-postagged.txt"
 
 Clear-Content $POSTaggerOutput
 Get-Content $TokenizationOutput | opennlp POSTagger $POSTaggerModel > $POSTaggerOutput
-#>
+
 
 # Step 3-alternate. Parse sentence
 $ParserModel = ".\models\en-parser-chunking.bin"
