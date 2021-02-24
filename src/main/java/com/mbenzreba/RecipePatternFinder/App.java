@@ -1,11 +1,8 @@
 package com.mbenzreba.RecipePatternFinder;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
 
-import opennlp.tools.*;
+// Java imports
+import java.util.Scanner;
 
 
 /**
