@@ -38,3 +38,11 @@ buildNumber.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+
+# Added for recipe-pattern-finder
+
+# Ignore all binaries (read: nlp models) except for the originals found in .\models
+en-*.bin
+!models/en-*.bin
