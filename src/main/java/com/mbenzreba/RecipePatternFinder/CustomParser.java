@@ -1,9 +1,11 @@
 package com.mbenzreba.RecipePatternFinder;
 
+
 // Java imports
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 
 // Java imports
 import opennlp.tools.cmdline.parser.ParserTool;
@@ -12,6 +14,7 @@ import opennlp.tools.parser.Parser;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.tokenize.TokenizerME;
+
 
 /**
  * <...>
