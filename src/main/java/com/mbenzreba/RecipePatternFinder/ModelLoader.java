@@ -90,10 +90,28 @@ public class ModelLoader {
             }
 
             // Get the actual properties
+            File f;
+            ClassLoader c = getClass().getClassLoader();
+
+
+            // TEMPORARY FIX FROM:
+            // https://stackoverflow.com/questions/28673651/how-to-get-the-path-of-src-test-resources-directory-in-junit
+            // TODO: Increase performance here, since the constant file loading is taking too long
             this._sentDetectorModelPath = props.getProperty("sentdetect_path");
+            f = new File(c.getResource(this._sentDetectorModelPath).getFile());
+            this._sentDetectorModelPath = f.getAbsolutePath();
+
             this._tokenizerModelPath = props.getProperty("tokenizer_path");
+            f = new File(c.getResource(this._tokenizerModelPath).getFile());
+            this._tokenizerModelPath = f.getAbsolutePath();
+
             this._posTaggerModelPath = props.getProperty("postagger_path");
+            f = new File(c.getResource(this._posTaggerModelPath).getFile());
+            this._posTaggerModelPath = f.getAbsolutePath();
+
             this._parserModelPath = props.getProperty("parser_path");
+            f = new File(c.getResource(this._parserModelPath).getFile());
+            this._parserModelPath = f.getAbsolutePath();
 
             iStream.close();
         }
@@ -112,6 +130,7 @@ public class ModelLoader {
      */
     private void _ensureModelPaths(String[] files) throws FileNotFoundException
     {
+        ClassLoader c = getClass().getClassLoader();
         File f;
 
         for (String s: files)
