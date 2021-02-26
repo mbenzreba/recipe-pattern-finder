@@ -1,9 +1,12 @@
 package com.mbenzreba.RecipePatternFinder;
 
+import java.io.File;
 // Java imports
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 // OpenNLP imports
 import opennlp.tools.parser.Parser;
@@ -35,10 +38,91 @@ public class ModelLoader {
     private final static String POSTAGGER_MODEL_PATH = ".\\models\\en-pos-maxent.bin";
     private final static String PARSER_MODEL_PATH = ".\\models\\en-parser-chunking.bin";
 
+    private String _sentDetectorModelPath;
+    private String _tokenizerModelPath;
+    private String _posTaggerModelPath;
+    private String _parserModelPath;
+
+    private String _modelMessage;
+
 
     public ModelLoader()
     {
         // Check that each model exist, throw an error otherwise
+        this._findModelPaths();
+
+        String[] filenames ={this._sentDetectorModelPath, this._tokenizerModelPath, 
+            this._posTaggerModelPath, this._parserModelPath};
+        try
+        {
+            this._ensureModelPaths(filenames);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Load in the model paths from config.properties.
+     * 
+     * @see https://crunchify.com/java-properties-file-how-to-read-config-properties-values-in-java/
+     */
+    private void _findModelPaths()
+    {
+        InputStream iStream;
+
+        try
+        {
+            Properties props = new Properties();
+            String propsFileName = "config.properties";
+
+            iStream = getClass().getClassLoader().getResourceAsStream(propsFileName);
+
+            if (iStream != null)
+            {
+                props.load(iStream);
+            }
+            else
+            {
+                throw new FileNotFoundException();
+            }
+
+            // Get the actual properties
+            this._sentDetectorModelPath = props.getProperty("sentdetect_path");
+            this._tokenizerModelPath = props.getProperty("tokenizer_path");
+            this._posTaggerModelPath = props.getProperty("postagger_path");
+            this._parserModelPath = props.getProperty("parser_path");
+
+            iStream.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * 
+     * @param   files
+     * @throws  FileNotFoundException
+     */
+    private void _ensureModelPaths(String[] files) throws FileNotFoundException
+    {
+        File f;
+
+        for (String s: files)
+        {
+            f = new File(s);
+            if (!f.exists())
+            {
+                throw new FileNotFoundException(s + " was not found.");
+            }
+        }
+
     }
 
 
