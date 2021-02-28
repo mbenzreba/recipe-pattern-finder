@@ -23,8 +23,8 @@ public class App
         System.out.println( "A lot still to do..." );
 
         // TODO: Check if this txt file containing the recipe actually exists
-        String inputFile = args[0];
-        CustomParser recipeParser = new CustomParser(inputFile);
+        //String inputFile = args[0];
+        //CustomParser recipeParser = new CustomParser(inputFile);
 
         // Start a stdin scanner and a variable to store user input
         Scanner scanner = new Scanner(System.in);
