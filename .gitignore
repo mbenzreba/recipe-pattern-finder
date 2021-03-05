@@ -46,3 +46,6 @@ hs_err_pid*
 # Ignore all binaries (read: nlp models) except for the originals found in .\models
 en-*.bin
 !models/en-*.bin
+
+# Ignore testenv, where I do all the testing
+testenv/*
