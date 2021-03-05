@@ -20,8 +20,8 @@ This script is meant to be run from the recipe-pattern-finder top directory
 
 # Step 1. Split txt file to sentence for each line
 $SentDetectModel = ".\models\en-sent.bin"
-$SentDetectInput = ".\corpora\recipes.train"
-$SentDetectOutput = ".\corpora\recipes-sentdetected.txt"
+$SentDetectInput = ".\corpora\peruvian-chicken.txt"
+$SentDetectOutput = ".\corpora\peruvian-chicken-sentdetected.txt"
 
 Clear-Content $SentDetectOutput
 Get-Content $SentDetectInput | opennlp SentenceDetector $SentDetectModel > $SentDetectOutput
@@ -29,7 +29,7 @@ Get-Content $SentDetectInput | opennlp SentenceDetector $SentDetectModel > $Sent
 
 # Step 2. Split sentences into possible tokens by whitespace.
 $TokenizationModel = ".\models\en-token.bin"
-$TokenizationOutput = ".\corpora\recipes-tokenized.txt"
+$TokenizationOutput = ".\corpora\peruvian-chicken-tokenized.txt"
 
 Clear-Content $TokenizationOutput
 Get-Content $SentDetectOutput | opennlp TokenizerME $TokenizationModel > $TokenizationOutput
@@ -37,7 +37,7 @@ Get-Content $SentDetectOutput | opennlp TokenizerME $TokenizationModel > $Tokeni
 
 # Step 3a. Find POSs (Phrases Of Speech) of the input
 $POSTaggerModel = ".\models\en-pos-maxent.bin"
-$POSTaggerOutput = ".\corpora\recipes-postagged.txt"
+$POSTaggerOutput = ".\corpora\peruvian-chicken-postagged.txt"
 
 Clear-Content $POSTaggerOutput
 Get-Content $TokenizationOutput | opennlp POSTagger $POSTaggerModel > $POSTaggerOutput
@@ -45,7 +45,7 @@ Get-Content $TokenizationOutput | opennlp POSTagger $POSTaggerModel > $POSTagger
 
 # Step 3-alternate. Parse sentence
 $ParserModel = ".\models\en-parser-chunking.bin"
-$ParserOutput = ".\corpora\recipes-parsed.txt"
+$ParserOutput = ".\corpora\peruvian-chicken-parsed.txt"
 
 Clear-Content $ParserOutput
 Get-Content $TokenizationOutput | opennlp Parser $ParserModel > $ParserOutput
