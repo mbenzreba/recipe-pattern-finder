@@ -1,21 +1,42 @@
 package com.mbenzreba.RecipePatternFinder;
 
+
+// Java imports
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+
+/**
+ * Extracts the file looping process. Clients can use this class to easily run through a file,
+ * line-by-line.
+ * 
+ * 
+ * @author Mohamed Benzreba
+ */
 public class FileLooper 
 {
-    private File _corpus;
+
+    /** Used to read the file resource */
     private BufferedReader _reader;
+    /** Used to open the file resource */
     private InputStream _resource;
 
+
+
+    /**
+     * Returns an object that points to the resource file pointed to by the resource argument.
+     * Use startReading() to start reading from the resource. When finished, make sure to close
+     * access to the resource by calling stopReading().
+     * 
+     * @param resource  name of resource
+     * @see             com.mbenzreba.RecipePatternFinder.FileLooper.startReading()
+     * @see             com.mbenzreba.RecipePatternFinder.FileLooper.stopReading()
+     */
     public FileLooper(String resource)
     {
         // This file extraction is almost identical to the one found in ModelLoader
@@ -54,13 +75,16 @@ public class FileLooper
         }
     }
 
+
+
     /**
      * Reads a line of POS-tagged text using _reader and returns it as a ready-made POSMap.
      * 
      * @return  next line in _reader as POSMap
      * @see     POSMap
      */
-    public String nextLine() {
+    public String nextLine() 
+    {
         String line = "";
         try 
         {
