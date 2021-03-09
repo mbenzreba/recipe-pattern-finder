@@ -21,17 +21,18 @@ import java.util.ArrayList;
  */
 public class WordTree 
 {
+
+
     /** Pre-processed sentence split up by tokens (whitespace) */
     private String[] _tokens;
     /** Tracking integer for building the tree */
     private int _tokens_i;
     /** Root WordTreeNode of the tree */
-    private WordTreeNode _root;
+    protected WordTreeNode _root;
     /** Used to build the tree */
     private int _goToLevel;
     /** Used to flag that something is wrong -- i.e. too few tokens are in the tree */
     private boolean _isEmpty;
-
 
 
     /**
@@ -53,21 +54,14 @@ public class WordTree
         {
             this._isEmpty = false;
             this._root = this._initializeNode(1);
+            this._cleanAnnotations(this._root);
         }
         
     }
 
-
-
-    /**
-     * Returns whether the tree is empty.
-     * 
-     * @return  true if the tree is empty (i.e. unworkable), false otherwise
-     */
-    public boolean isEmpty()
-    {
-        return this._isEmpty;
-    }
+    /* ---------------------------------------------------------------------------------------------------- */
+    /* -------------------------------------- PRIVATE INITIALIZATION -------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------- */
 
 
 
@@ -121,11 +115,67 @@ public class WordTree
 
 
     /**
-     * Prints the tree to console.
+     * Cleans the node of any extra parentheses left by OpenNLP's parsing annotation.
+     * 
+     * @param node  WordTreeNode to clean
+     */
+    private void _cleanAnnotations(WordTreeNode node)
+    {
+        node._pos = StringHelper.purgeCharacter(node._pos, '(');
+        if (node._word != null)
+        {
+            node._word = StringHelper.purgeCharacter(node._word, ')');
+        }
+
+        for (int i=0; i < node._children.size(); i++)
+        {
+            this._cleanAnnotations(node._children.get(i));
+        }
+
+    }
+
+
+
+    /* ---------------------------------------------------------------------------------------------------- */
+    /* -------------------------------------------- UTILITIES --------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------- */
+
+
+
+    /**
+     * Returns whether the tree is empty.
+     * 
+     * @return  true if the tree is empty (i.e. unworkable), false otherwise
+     */
+    public boolean isEmpty()
+    {
+        return this._isEmpty;
+    }
+
+
+
+    /* ---------------------------------------------------------------------------------------------------- */
+    /* --------------------------------------- PRINTING TO CONSOLE ---------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------- */
+
+
+
+    /**
+     * Prints the tree to console. Looks much like the bash 'tree' command.
      */
     public void printTree()
     {
         this._printNode(this._root, 1);
+    }
+
+
+
+    /**
+     * Prints the sentence the tree represents to console.
+     */
+    public void printSentence()
+    {
+        this._printNodeWord(this._root);
     }
 
 
@@ -159,6 +209,29 @@ public class WordTree
         for (int childIndex = 0; childIndex < node._children.size(); ++childIndex)
         {
             this._printNode(node._children.get(childIndex), level+1);
+        }
+    }
+
+
+
+    /**
+     * Prints the node argument's stored word to console. If the node does not contain a word,
+     * then the node's children are accessed to look for words.
+     * 
+     * @param node  node to print the word of
+     */
+    private void _printNodeWord(WordTreeNode node)
+    {
+        if (node._word != null)
+        {
+            System.out.print(node._word + " ");
+        }
+        else
+        {
+            for (int childIndex = 0; childIndex < node._children.size(); ++childIndex)
+            {
+                this._printNodeWord(node._children.get(childIndex));
+            }
         }
     }
 
