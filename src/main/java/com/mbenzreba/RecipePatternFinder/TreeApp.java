@@ -20,7 +20,12 @@ public class TreeApp {
         while (!line.isEmpty()) 
         {
             WordTree tree = new WordTree(line);
+            System.out.println("\n----- NEXT SENTENCE -----\n");
+            tree.printSentence();
+            System.out.println("\n");
             tree.printTree();
+
+            
 
             try
             {
