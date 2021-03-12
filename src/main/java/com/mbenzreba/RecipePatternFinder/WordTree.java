@@ -244,14 +244,14 @@ public class WordTree
      * 
      * @author Mohamed Benzreba
      */
-    private class WordTreeNode
+    protected class WordTreeNode
     {
         /** Phrase of speech */
-        private String _pos;
+        protected String _pos;
         /** Word */
-        private String _word;
+        protected String _word;
         /** Node's children */
-        private ArrayList<WordTreeNode> _children;
+        protected ArrayList<WordTreeNode> _children;
 
 
 
