@@ -22,7 +22,9 @@ public abstract class RuleTree {
         return new RuleTreeNode("EMPTY-TREE");
     }
 
-    protected abstract void _cleanAnnotations();
+    protected void _cleanAnnotations() {
+        // TODO: clean nodes of unwanted string artifacts
+    }
 
 
     /**
