@@ -204,7 +204,7 @@ public class PennLibrary {
     }
 
     public boolean isParentTag(String idk) {
-        return (this.isClause(idk) || this.isPhrase(idk));
+        return (this.isClause(idk) || this.isPhrase(idk) || idk.equals("ANY-PARENT"));
     }
 
     public boolean isAdjective(String idk) {
@@ -233,7 +233,8 @@ public class PennLibrary {
 
     public boolean isLeafTag(String idk) {
         return (this.isAdjective(idk) || this.isAdverb(idk) || this.isConjunction(idk) ||
-            this.isNoun(idk) || this.isVerb(idk) || this.isWh(idk) || this._otherWordsSet.contains(idk));
+            this.isNoun(idk) || this.isVerb(idk) || this.isWh(idk) || this._otherWordsSet.contains(idk) || 
+            idk.equals("ANY-LEAF"));
     }
 
     public boolean isTag(String idk) {
