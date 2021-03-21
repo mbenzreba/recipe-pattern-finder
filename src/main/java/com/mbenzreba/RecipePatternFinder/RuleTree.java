@@ -1,5 +1,6 @@
 package com.mbenzreba.RecipePatternFinder;
 
+import java.util.ArrayList;
 
 /**
  * @author Mohamed Benzreba
@@ -27,34 +28,7 @@ public abstract class RuleTree {
     }
 
 
-    /**
-     * @author Mohamed Benzreba
-     */
-    protected class RuleTreeNode {
-
-        /** Phrase of speech of the node */
-        protected String _pos;
-        /** Value; note, NOT 'word', since value of the node can now be eitehr a word, or target, etc. */
-        protected String _value;
-
-        /** Structural pattern of this node's children
-         * @see com.mbenzreba.RecipePatternFinder.types.NodeChildrenPattern
-         */
-        protected NodeChildrenPattern _ncp;
-
-        /** Type of the leaf of this node
-         * @see com.mbenzreba.RecipePatternFinder.types.LeafType
-         */
-        protected LeafType _leafType;
-
-        public RuleTreeNode(String pos) {
-            this._pos = pos;
-            this._value = null;
-            this._ncp = NodeChildrenPattern.NONE;
-            this._leafType = LeafType.NONE;
-        }
-
-    }
+    
     
 }
 

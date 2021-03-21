@@ -1,11 +1,8 @@
 package com.mbenzreba.RecipePatternFinder;
 
 
-import java.lang.annotation.ElementType;
+// Java imports
 import java.util.ArrayList;
-
-// Package imports
-import com.mbenzreba.RecipePatternFinder.RuleTree.RuleTreeNode;
 
 
 /**
@@ -33,7 +30,8 @@ public class RuleInterpreter {
     public final static String OPEN_LEAF_CH = "<";
     public final static String CLOSE_LEAF_CH = ">";
 
-    public final static String LEAF_COLLECTOR_CH = ",";
+    public final static String LEAF_COLLECTOR_CH = "~";
+    public final static String LEAF_COLLECTOR_DELIMITER_CH = ",";
 
     public final static String TARGET_MARKER_CH = ":";
     public final static String LITERAL_MARKER_CH = "=";
@@ -111,7 +109,6 @@ public class RuleInterpreter {
      * @param rulePiece rule to apply to this node
      */
     public void interpret(RuleTreeNode refNode, String rulePiece) {
-        // TODO: interpret just one 'piece' of the rule, and alter refNode in place
         // STEP 1. Get each element defined by seperation using a delimiter
         String elements[] = rulePiece.split(RuleInterpreter.DELIMITER);
 
@@ -120,6 +117,9 @@ public class RuleInterpreter {
         for (String element : elements) {
             commands.add(this._identifyElementCommand(element));
         }
+
+        // STEP 3. Based on commands and elements, execute actions on the refNode
+        this._fillNode(refNode, elements, commands);
     }
 
 
@@ -163,6 +163,51 @@ public class RuleInterpreter {
         
 
         return command;
+    }
+
+
+    private void _fillNode(RuleTreeNode refNode, String[] elements, ArrayList<CommandType> commands) {
+        // TODO: Extract each of these operations into their own methods
+        switch (commands.size()) {
+            case 1:
+                // The node's children must exist in this order, but other nodes are allowed to exist among them
+                if (commands.get(0) == CommandType.GENERAL_CHILDREN_STRUCTURE) {
+                    refNode._ncp = NodeChildrenPattern.GENERAL;
+                }
+                // The node is a parent, and contains a Phrase level value
+                else if (commands.get(0) == CommandType.PHRASE) {
+                    refNode._pos = elements[0];
+                }
+                break;
+            case 2:
+                // A specific pairing of POS and word must be present
+                if (commands.get(0) == CommandType.PHRASE && commands.get(1) == CommandType.LITERAL) {
+                    refNode._pos = elements[0];
+                    refNode._value = elements[1];
+                    refNode._ncp = NodeChildrenPattern.NONE;
+                    refNode._leafType = LeafType.SPECIFIC;
+                }
+                // Leaves of the node are detailed as targets
+                else if (commands.get(0) == CommandType.LEAF_COLLECTION && commands.get(1) == CommandType.TARGET) {
+                    refNode._ncp = NodeChildrenPattern.LEAF;
+                    String leaves[] = elements[0].split(LEAF_COLLECTOR_DELIMITER_CH);
+                    for (String leaf : leaves) {
+                        refNode.addChild(new RuleTreeNode(leaf, elements[0], NodeChildrenPattern.NONE, LeafType.TARGET));
+                    }
+                }
+                break;
+            case 3:
+                // Node's leaves detail targets to be fulfilled
+                if (commands.get(0) == CommandType.PHRASE && commands.get(1) == CommandType.LEAF_COLLECTION &&
+                    commands.get(2) == CommandType.TARGET) {
+                    refNode._ncp = NodeChildrenPattern.LEAF;
+                    String leaves[] = elements[1].split(LEAF_COLLECTOR_DELIMITER_CH);
+                    for (String leaf : leaves) {
+                        refNode.addChild(new RuleTreeNode(leaf, elements[2], NodeChildrenPattern.NONE, LeafType.TARGET));
+                    }
+                }
+                break;
+        }
     }
     
 }
