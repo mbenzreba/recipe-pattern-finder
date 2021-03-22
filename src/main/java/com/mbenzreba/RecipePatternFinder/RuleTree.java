@@ -43,8 +43,6 @@ public abstract class RuleTree {
      */
     protected void _initializeNode(String rule) {
         int currLevel = 1;
-
-        // TODO: Set up a loop to process every single command found in the rule
         int ruleIndex = 1;
         this._root = new RuleTreeNode();
         RuleTreeNode currNode = this._root;
@@ -61,6 +59,17 @@ public abstract class RuleTree {
                 parentNode = currNode;
                 currNode = new RuleTreeNode();
                 parentNode.addChild(currNode);
+                if (parentNode._children.size() == 1) {
+                    // First child, so make sure the pattern is set
+                    parentNode._ncp = NodeChildrenPattern.SPECIFIC;
+                }
+
+                String ruleToInterpret = runningRulePiece.toString().strip();
+                if (!ruleToInterpret.isBlank()) {
+                    RuleInterpreter.get().interpret(parentNode, ruleToInterpret);
+                    runningRulePiece = new StringBuilder();
+                }
+
                 currLevel++;
             }
             else if (c == RuleInterpreter.CLOSE_NODE_CH) {
@@ -68,6 +77,7 @@ public abstract class RuleTree {
                 String ruleToInterpret = runningRulePiece.toString().strip();
                 if (!ruleToInterpret.isBlank()) {
                     RuleInterpreter.get().interpret(currNode, ruleToInterpret);
+                    runningRulePiece = new StringBuilder();
                 }
                 
                 currLevel--;
