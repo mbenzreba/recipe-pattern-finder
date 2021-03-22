@@ -191,6 +191,12 @@ public class RuleInterpreter {
                         refNode.addChild(new RuleTreeNode(leaf, elements[0], NodeChildrenPattern.NONE, NodeType.TARGET));
                     }
                 }
+                // One specific node is detailed as the target
+                else if (commands.get(0) == CommandType.POS && commands.get(1) == CommandType.TARGET) {
+                    refNode._pos = elements[0];
+                    refNode._value = elements[1];
+                    refNode._nodeType = NodeType.TARGET;
+                }
                 break;
             case 3:
                 // Node's leaves detail targets to be fulfilled
