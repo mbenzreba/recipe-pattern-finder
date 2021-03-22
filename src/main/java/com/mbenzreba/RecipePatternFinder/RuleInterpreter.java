@@ -181,14 +181,14 @@ public class RuleInterpreter {
                     refNode._pos = elements[0];
                     refNode._value = elements[1];
                     refNode._ncp = NodeChildrenPattern.NONE;
-                    refNode._leafType = LeafType.SPECIFIC;
+                    refNode._nodeType = NodeType.SPECIFIC;
                 }
                 // Leaves of the node are detailed as targets
                 else if (commands.get(0) == CommandType.LEAF_COLLECTION && commands.get(1) == CommandType.TARGET) {
                     refNode._ncp = NodeChildrenPattern.LEAF;
                     String leaves[] = elements[0].split(LEAF_COLLECTOR_DELIMITER_CH);
                     for (String leaf : leaves) {
-                        refNode.addChild(new RuleTreeNode(leaf, elements[0], NodeChildrenPattern.NONE, LeafType.TARGET));
+                        refNode.addChild(new RuleTreeNode(leaf, elements[0], NodeChildrenPattern.NONE, NodeType.TARGET));
                     }
                 }
                 break;
@@ -199,8 +199,20 @@ public class RuleInterpreter {
                     refNode._ncp = NodeChildrenPattern.LEAF;
                     String leaves[] = elements[1].split(LEAF_COLLECTOR_DELIMITER_CH);
                     for (String leaf : leaves) {
-                        refNode.addChild(new RuleTreeNode(leaf, elements[2], NodeChildrenPattern.NONE, LeafType.TARGET));
+                        refNode.addChild(new RuleTreeNode(leaf, elements[2], NodeChildrenPattern.NONE, NodeType.TARGET));
                     }
+                }
+                else if (commands.get(0) == CommandType.PHRASE && commands.get(1) == CommandType.CORRECT_TO &&
+                    commands.get(2) == CommandType.PHRASE) {
+                    refNode._pos = elements[0];
+                    refNode._nodeType = NodeType.CORRECT_TO;
+                    refNode._value = elements[2];
+                }
+                else if (commands.get(0) == CommandType.POS && commands.get(1) == CommandType.CORRECT_TO &&
+                    commands.get(2) == CommandType.POS) {
+                    refNode._pos = elements[0];
+                    refNode._nodeType = NodeType.CORRECT_TO;
+                    refNode._value = elements[2];
                 }
                 break;
         }
