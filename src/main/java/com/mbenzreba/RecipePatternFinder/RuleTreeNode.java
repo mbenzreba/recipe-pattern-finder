@@ -112,4 +112,11 @@ public class RuleTreeNode {
         return this._children.get(this._children.size() - 1);
     }
 
+
+    public boolean equals(RuleTreeNode other) {
+        return (this._children.size() == other._children.size() &&
+                this._pos == other._pos && this._value == other._value &&
+                this._ncp == other._ncp && this._leafType == other._leafType);
+    }
+
 }
