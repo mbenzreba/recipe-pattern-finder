@@ -24,8 +24,8 @@ public class RuleInterpreter {
 
     public final static String DELIMITER = " ";
 
-    public final static String OPEN_NODE_CH = "(";
-    public final static String CLOSE_NODE_CH = ")";
+    public final static char OPEN_NODE_CH = '(';
+    public final static char CLOSE_NODE_CH = ')';
 
     public final static String OPEN_LEAF_CH = "<";
     public final static String CLOSE_LEAF_CH = ">";
@@ -38,19 +38,6 @@ public class RuleInterpreter {
 
     public final static String ENFORCE_GENERAL_NODE_CHILDREN_PATTERN = "...";
     public final static String ENFORCE_POS_CORRECTION = "->";
-
-
-    private enum CommandType {
-        PHRASE,
-        POS,
-        LEAF_COLLECTION,
-        TARGET,
-        LITERAL,
-        GENERAL_CHILDREN_STRUCTURE,
-        CORRECT_TO,
-        UNKNOWN,
-    }
-
 
 
     /******************************************************************************************/
@@ -166,6 +153,15 @@ public class RuleInterpreter {
     }
 
 
+
+    /**
+     * Fils the refNode argument with the appropriate properties, based on what elements are present
+     * in the rule and what commands these elements represent.
+     * 
+     * @param refNode   node to fill
+     * @param elements  elements of the rule
+     * @param commands  CommandType of each respective element
+     */
     private void _fillNode(RuleTreeNode refNode, String[] elements, ArrayList<CommandType> commands) {
         // TODO: Extract each of these operations into their own methods
         switch (commands.size()) {

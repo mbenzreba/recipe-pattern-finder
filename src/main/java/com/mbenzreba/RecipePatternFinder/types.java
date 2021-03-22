@@ -31,3 +31,18 @@ enum LeafType {
     /** There is no leaf */
     NONE,
 }
+
+
+/**
+ * 
+ */
+enum CommandType {
+    PHRASE,
+    POS,
+    LEAF_COLLECTION,
+    TARGET,
+    LITERAL,
+    GENERAL_CHILDREN_STRUCTURE,
+    CORRECT_TO,
+    UNKNOWN,
+}
