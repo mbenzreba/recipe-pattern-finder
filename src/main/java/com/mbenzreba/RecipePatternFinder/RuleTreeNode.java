@@ -34,7 +34,7 @@ public class RuleTreeNode {
     /** Type of the leaf of this node
      * @see com.mbenzreba.RecipePatternFinder.types.LeafType
      */
-    protected LeafType _leafType;
+    protected NodeType _nodeType;
 
 
     /******************************************************************************************/
@@ -50,7 +50,7 @@ public class RuleTreeNode {
         this._value = null;
         this._children = new ArrayList<RuleTreeNode>();
         this._ncp = NodeChildrenPattern.NONE;
-        this._leafType = LeafType.NONE;
+        this._nodeType = NodeType.NONE;
     }
 
 
@@ -65,7 +65,7 @@ public class RuleTreeNode {
         this._value = null;
         this._children = new ArrayList<RuleTreeNode>();
         this._ncp = NodeChildrenPattern.NONE;
-        this._leafType = LeafType.NONE;
+        this._nodeType = NodeType.NONE;
     }
 
 
@@ -78,12 +78,12 @@ public class RuleTreeNode {
      * @param pat   the structural pattern this node's children follow
      * @param type  the type of leaf this node is, if it is one
      */
-    public RuleTreeNode(String pos, String value, NodeChildrenPattern pat, LeafType type) {
+    public RuleTreeNode(String pos, String value, NodeChildrenPattern pat, NodeType type) {
         this._pos = pos;
         this._value = value;
         this._children = new ArrayList<RuleTreeNode>();
         this._ncp = pat;
-        this._leafType = type;
+        this._nodeType = type;
     }
 
 
@@ -113,10 +113,10 @@ public class RuleTreeNode {
     }
 
 
-    public boolean equals(RuleTreeNode other) {
+    public boolean equalsNode(RuleTreeNode other) {
         return (this._children.size() == other._children.size() &&
-                this._pos == other._pos && this._value == other._value &&
-                this._ncp == other._ncp && this._leafType == other._leafType);
+                this._pos.contentEquals(other._pos) && this._value.contentEquals(other._value) &&
+                this._ncp == other._ncp && this._nodeType == other._nodeType);
     }
 
 }

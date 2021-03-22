@@ -21,13 +21,14 @@ enum NodeChildrenPattern {
 /**
  * @author Mohamed Benzreba
  */
-enum LeafType {
+enum NodeType {
     /** The 'pos' and 'word' values of the leaf must match exactly to the compared node */
     SPECIFIC,
     /** The leaf fulfills a target that the rule defines */
     TARGET,
     /** The 'pos' of the leaf can be variable */
     ANY,
+    CORRECT_TO,
     /** There is no leaf */
     NONE,
 }
