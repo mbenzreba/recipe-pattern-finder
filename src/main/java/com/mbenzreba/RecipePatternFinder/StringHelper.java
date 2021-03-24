@@ -122,4 +122,24 @@ public class StringHelper {
 
         return newStr;
     }
+
+
+    static public String getStringBetween(String original, char ch1, char ch2) {
+        String ret = "";
+        boolean addToRet = false;
+        for (int i = 0; i < original.length(); i++) {
+            if (original.charAt(i) == ch1) {
+                addToRet = true;
+            }
+            else if (original.charAt(i) == ch2) {
+                addToRet = false;
+            }
+
+            if (addToRet) {
+                ret += original.charAt(i);
+            }
+        }
+
+        return ret;
+    }
 }
