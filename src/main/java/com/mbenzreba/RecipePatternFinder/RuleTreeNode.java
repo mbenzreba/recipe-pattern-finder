@@ -46,8 +46,8 @@ public class RuleTreeNode {
      * Returns an empty RuleTreeNode.
      */
     public RuleTreeNode() {
-        this._pos = null;
-        this._value = null;
+        this._pos = " ";
+        this._value = " ";
         this._children = new ArrayList<RuleTreeNode>();
         this._ncp = NodeChildrenPattern.NONE;
         this._nodeType = NodeType.NONE;
@@ -62,7 +62,7 @@ public class RuleTreeNode {
      */
     public RuleTreeNode(String pos) {
         this._pos = pos;
-        this._value = null;
+        this._value = " ";
         this._children = new ArrayList<RuleTreeNode>();
         this._ncp = NodeChildrenPattern.NONE;
         this._nodeType = NodeType.NONE;

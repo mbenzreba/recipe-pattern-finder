@@ -29,6 +29,7 @@ public abstract class RuleTree {
      */
     protected RuleTree(String rule) {
         this._initializeNode(rule);
+        this._cleanAnnotations();
     }
 
 
@@ -101,6 +102,26 @@ public abstract class RuleTree {
      */
     protected void _cleanAnnotations() {
         // TODO: clean nodes of unwanted string artifacts
+        this._cleanAnnotations(this._root);
+    }
+
+
+    private void _cleanAnnotations(RuleTreeNode node) {
+        // Check that the node actually contains artifacts from the rule interpretation language
+        if (node._value.contains(RuleInterpreter.LEAF_COLLECTOR_CH)) {
+            node._value = StringHelper.purgeCharacter(node._value, RuleInterpreter.LEAF_COLLECTOR_CH.charAt(0));
+        }
+        else if (node._value.contains(RuleInterpreter.LITERAL_MARKER_CH)) {
+            node._value = StringHelper.purgeCharacter(node._value, RuleInterpreter.LITERAL_MARKER_CH.charAt(0));
+        }
+        else if (node._value.contains(RuleInterpreter.TARGET_MARKER_CH)) {
+            node._value = StringHelper.purgeCharacter(node._value, RuleInterpreter.TARGET_MARKER_CH.charAt(0));
+        }
+
+        // Traverse over nodes
+        for (RuleTreeNode n : node._children) {
+            this._cleanAnnotations(n);
+        }
     }
     
 }
