@@ -104,6 +104,24 @@ public class FileLooper
     }
 
 
+    public String readLine(int lineNo) {
+        String line = "";
+
+        try {
+            this._reader.reset();
+            for (int i = 1; i < lineNo; i++) {
+                this._reader.readLine();
+            }
+            line = this._reader.readLine();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return line;
+    }
+
+
 
     /**
      * Starts a reader to make our way through _corpus. Please always call startReading() at the beginning
@@ -143,4 +161,5 @@ public class FileLooper
 
         return closedSuccessfully;
     }
+
 }
