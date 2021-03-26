@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 final class Target 
 {
-    private String _name;
-    private boolean _isFulfilled;
-    private ArrayList<String> _values;
-    private int _nextFix;
+    protected String _name;
+    protected boolean _isFulfilled;
+    protected ArrayList<String> _values;
+
+    public Target() {
+        this._name = "";
+        this._isFulfilled = false;
+        this._values = new ArrayList<String>();
+    }
 
     public Target(String name)
     {
@@ -16,11 +21,10 @@ final class Target
         this._values = new ArrayList<String>();
     }
 
-    public Target(String name, int fixLine)
-    {
+    public Target(String name, String val) {
         this._name = name;
-        this._isFulfilled = false;
+        this._isFulfilled = true;
         this._values = new ArrayList<String>();
-        this._nextFix = fixLine;
+        this._values.add(val);
     }
 }
