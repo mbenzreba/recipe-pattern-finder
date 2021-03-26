@@ -21,7 +21,7 @@ public class RecipeWordTreeArborist {
      * 
      * @return
      */
-    public static RecipeWordTreeArborist getSingleton() {
+    public static RecipeWordTreeArborist get() {
         if (singleton == null) {
             singleton = _createSingleton();
         }
