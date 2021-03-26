@@ -6,7 +6,7 @@
 
   <groupId>com.mbenzreba.RecipePatternFinder</groupId>
   <artifactId>recipe-pattern-finder</artifactId>
-  <version>0.5</version>
+  <version>0.6</version>
 
   <name>recipe-pattern-finder</name>
   <!-- FIXME change it to the project's website -->
