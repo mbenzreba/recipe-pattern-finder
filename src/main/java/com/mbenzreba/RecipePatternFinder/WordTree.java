@@ -33,6 +33,7 @@ public class WordTree
     private int _goToLevel;
     /** Used to flag that something is wrong -- i.e. too few tokens are in the tree */
     private boolean _isEmpty;
+    private String _sentence;
 
 
     /**
@@ -55,6 +56,8 @@ public class WordTree
             this._isEmpty = false;
             this._root = this._initializeNode(1);
             this._cleanAnnotations(this._root);
+            this._sentence = "";
+            this._initializeSentence(this._root);
         }
         
     }
@@ -135,6 +138,21 @@ public class WordTree
     }
 
 
+    private void _initializeSentence(WordTreeNode node) {
+        if (node._word != null)
+        {
+            this._sentence += node._word + " ";
+        }
+        else
+        {
+            for (int childIndex = 0; childIndex < node._children.size(); ++childIndex)
+            {
+                this._initializeSentence(node._children.get(childIndex));
+            }
+        }
+    }
+
+
 
     /* ---------------------------------------------------------------------------------------------------- */
     /* -------------------------------------------- UTILITIES --------------------------------------------- */
@@ -150,6 +168,12 @@ public class WordTree
     public boolean isEmpty()
     {
         return this._isEmpty;
+    }
+
+
+    public String getSentence() {
+        // Simple traversal while adding to a string
+        return this._sentence.strip();
     }
 
 
