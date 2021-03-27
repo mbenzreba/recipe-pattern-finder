@@ -142,4 +142,14 @@ public class StringHelper {
 
         return ret;
     }
+
+
+    static public String listToStr(String[] l) {
+        String str = "";
+        for (String s : l) {
+            str += s + " ";
+        }
+
+        return str;
+    }
 }
