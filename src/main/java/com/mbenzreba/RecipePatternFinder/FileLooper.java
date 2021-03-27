@@ -133,7 +133,7 @@ public class FileLooper
     public boolean startReading()
     {
         // ...
-        this._reader = new BufferedReader(new InputStreamReader(this._resource, StandardCharsets.UTF_16LE));
+        this._reader = new BufferedReader(new InputStreamReader(this._resource));
         return true;
     }
 

@@ -1,12 +1,13 @@
 package com.mbenzreba.RecipePatternFinder;
 
-import java.io.File;
+
 // Java imports
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 
 // OpenNLP imports
 import opennlp.tools.parser.Parser;
@@ -20,7 +21,6 @@ import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
 
-
 /**
  * <...>
  * 
@@ -28,22 +28,10 @@ import opennlp.tools.tokenize.TokenizerModel;
  */
 public class ModelLoader {
 
-    // TODO: Extract model loading process to a master method, since it's pretty samey-samey
-    // across the board
-    // TODO: Extract mdoel paths to a config.properties file
-
-    // OpenNLP model paths for loading
-    private final static String SENTDETECTOR_MODEL_PATH = ".\\models\\en-sent.bin";
-    private final static String TOKENIZER_MODEL_PATH = ".\\models\\en-token.bin";
-    private final static String POSTAGGER_MODEL_PATH = ".\\models\\en-pos-maxent.bin";
-    private final static String PARSER_MODEL_PATH = ".\\models\\en-parser-chunking.bin";
-
     private String _sentDetectorModelPath;
     private String _tokenizerModelPath;
     private String _posTaggerModelPath;
     private String _parserModelPath;
-
-    private String _modelMessage;
 
 
     public ModelLoader()
@@ -53,6 +41,7 @@ public class ModelLoader {
 
         String[] filenames ={this._sentDetectorModelPath, this._tokenizerModelPath, 
             this._posTaggerModelPath, this._parserModelPath};
+        /*
         try
         {
             this._ensureModelPaths(filenames);
@@ -60,7 +49,7 @@ public class ModelLoader {
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
-        }
+        } */
     }
 
 
@@ -145,6 +134,46 @@ public class ModelLoader {
     }
 
 
+    private InputStream _getResourceAsStream(String resource)
+    {
+        // This file extraction is almost identical to the one found in ModelLoader
+        // TODO: extract this resource file loading process to some common handler
+        InputStream iStream = null;
+
+        try 
+        {
+            Properties props = new Properties();
+            String propsFileName = "config.properties";
+
+            iStream = getClass().getClassLoader().getResourceAsStream(propsFileName);
+
+            if (iStream != null) 
+            {
+                props.load(iStream);
+            } 
+            else 
+            {
+                throw new FileNotFoundException();
+            }
+
+            // Get the actual properties
+            ClassLoader c = getClass().getClassLoader();
+
+            // TEMPORARY FIX FROM:
+            // https://stackoverflow.com/questions/28673651/how-to-get-the-path-of-src-test-resources-directory-in-junit
+            String corpusProperty = props.getProperty(resource);
+            iStream = c.getResourceAsStream(corpusProperty);
+
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+
+        return iStream;
+    }
+
+
 
     /**
      * Loads in a binary model found at ModelLoader.SENTDETECTOR_MODEL_PATH.
@@ -159,7 +188,7 @@ public class ModelLoader {
 
         try 
         {
-            modelIn = new FileInputStream(ModelLoader.SENTDETECTOR_MODEL_PATH);
+            modelIn = this._getResourceAsStream("sentdetect_path");
             SentenceModel model = new SentenceModel(modelIn);
             sentDetector = new SentenceDetectorME(model);
         }
@@ -200,7 +229,7 @@ public class ModelLoader {
 
         try 
         {
-            modelIn = new FileInputStream(ModelLoader.TOKENIZER_MODEL_PATH);
+            modelIn = this._getResourceAsStream("tokenizer_path");
             TokenizerModel model = new TokenizerModel(modelIn);
             tokenizer = new TokenizerME(model);
         }
@@ -240,7 +269,7 @@ public class ModelLoader {
         POSTaggerME posTagger = null;
         try 
         {
-            modelIn = new FileInputStream(ModelLoader.POSTAGGER_MODEL_PATH);
+            modelIn = this._getResourceAsStream("postagger_path");
             POSModel model = new POSModel(modelIn);
             posTagger = new POSTaggerME(model);
             
@@ -281,7 +310,7 @@ public class ModelLoader {
         Parser parser = null;
         try 
         {
-            modelIn = new FileInputStream(ModelLoader.PARSER_MODEL_PATH);
+            modelIn = this._getResourceAsStream("parser_path");
             ParserModel model = new ParserModel(modelIn);
             parser = ParserFactory.create(model);
             

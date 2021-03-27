@@ -25,6 +25,9 @@ public class CustomParser {
 
     // Instance members
     private String inputFile;
+    private String _recipe;
+    private String _sentences[];
+    private int _currentSentIndex;
     private ModelLoader loader;
 
 
@@ -33,11 +36,12 @@ public class CustomParser {
      * 
      * @param   inputFile   relative path of plain-text recipe file
      */
-    public CustomParser(String inputFile)
-    {
-        
-        this.inputFile = inputFile;
-        
+    public CustomParser(String raw)
+    {   
+        this._recipe = raw;
+        this.loader = new ModelLoader();
+        this._sentences = this._NLPSentDetect(raw);
+        this._currentSentIndex = 0;
     }
 
 
@@ -46,9 +50,11 @@ public class CustomParser {
      * Pipeline for preparing a plain-text recipe for parsing. Runs the recipe through
      * various OpenNLP tools.
      */
-    private void _prepareCorpus()
+    public Parse[] getNextParse()
     {
         // Pipeline goes here
+        String tmp[] = this._NLPTokenize(this._sentences[this._currentSentIndex++]);
+        return this._NLPParse(this._sentences[this._currentSentIndex++]);
     }
 
 
