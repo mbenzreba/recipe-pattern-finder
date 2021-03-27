@@ -1,6 +1,11 @@
 package com.mbenzreba.RecipePatternFinder;
 
 
+// Java utils
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 /**
  * @author Mohamed Benzreba
  */
@@ -8,6 +13,7 @@ public class RecipeWordTree extends WordTree
 {
 
     private TargetCollection _targets;
+    private HashMap<String, ArrayList<String>> _fulfilledTargets;
 
 
     /**
@@ -22,7 +28,7 @@ public class RecipeWordTree extends WordTree
     }
 
 
-    public boolean fulfill(Target t)
+    public boolean fulfill(String target)
     {
         // Try to fix it
         // TODO

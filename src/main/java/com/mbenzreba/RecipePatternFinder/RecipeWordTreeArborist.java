@@ -1,8 +1,18 @@
 package com.mbenzreba.RecipePatternFinder;
 
+
+// Java imports
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /**
+ * Singleton used as a sort-of facade from which clients can create RecipeWordTrees. So, it
+ * is implemented as a singleton, acts as a facade so that clients only need to interact with it
+ * (and not other, potentially more confusing classes in this subsystem like RulebookKeeper or
+ * RuleTrees), as well as a factory for producing RecipeWordTrees, since RecipeWordTrees should
+ * never be instantiated on their own.
+ * 
  * @author Mohamed Benzreba
  */
 public class RecipeWordTreeArborist {
@@ -54,7 +64,7 @@ public class RecipeWordTreeArborist {
     /******************************************************************************************/
 
 
-    private ArrayList<Target> _targets;
+    private HashMap<String, ArrayList<String>> _targets;
 
 
     /**
@@ -72,12 +82,6 @@ public class RecipeWordTreeArborist {
 
         boolean finished = false;
         while (!finished) {
-            boolean corrected = true;
-            for (int targetIndex = 0; targetIndex < this._targets.size(); targetIndex++) {
-                if (!originalRWT.fulfill(this._targets.get(targetIndex))) {
-                    corrected = false;
-                }
-            }
 
             // TODO: Check if targets fulfilled add up to an acceptable state
             // (the acceptable state is defined in the .rules file)
