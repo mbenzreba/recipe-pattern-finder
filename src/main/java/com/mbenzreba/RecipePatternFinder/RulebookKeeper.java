@@ -112,7 +112,6 @@ public class RulebookKeeper {
      * @return          an extended RuleTree that potentially fixes the issue the target is facing
      */
     public RuleTree getNextFix(String target) {
-        // TODO: return a RuleTree that could potentially fix the requested target
         String elements[] = this._rulebook.readLine(this._targets.getNextFix(target)).split(FIX_TYPE_MARKER);
 
         // Compare to figure out which type of fix tree to return
