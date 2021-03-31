@@ -56,6 +56,7 @@ public class RecipeWordTreeArborist {
      */
     private RecipeWordTreeArborist() {
         // TODO: Set up a RuleBookKeeper for RecipeWordTree.rules
+        this._rulebook = new RulebookKeeper("RecipeWordTree.rules");
     }
 
 
@@ -64,6 +65,7 @@ public class RecipeWordTreeArborist {
     /******************************************************************************************/
 
 
+    private RulebookKeeper _rulebook;
     private HashMap<String, ArrayList<String>> _targets;
 
 
@@ -87,6 +89,7 @@ public class RecipeWordTreeArborist {
             // (the acceptable state is defined in the .rules file)
             // If so, we are finished
             // If not, do it again
+            
         }
 
         // TODO
